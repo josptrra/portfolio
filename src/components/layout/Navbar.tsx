@@ -67,17 +67,19 @@ export function Navbar() {
                 [{item.label}]
               </a>
             ))}
-            <LanguageToggle />
           </div>
 
-          {/* Mobile Menu Button */}
-          <button 
-            className="block md:hidden bg-transparent border-none text-text text-2xl cursor-pointer p-0"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            {isMobileMenuOpen ? '✕' : '☰'}
-          </button>
+          {/* Right Section: Language Toggle & Mobile Menu */}
+          <div className="flex items-center gap-4">
+            <LanguageToggle />
+            <button 
+              className="block md:hidden bg-transparent border-none text-text text-2xl cursor-pointer p-0"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              {isMobileMenuOpen ? '✕' : '☰'}
+            </button>
+          </div>
         </div>
       </nav>
 

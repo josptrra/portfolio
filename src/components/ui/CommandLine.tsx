@@ -4,6 +4,7 @@ interface CommandLineProps {
   command: string;
   typed?: boolean;
   delay?: number;
+  speed?: number;
   onComplete?: () => void;
   className?: string;
 }
@@ -12,6 +13,7 @@ export function CommandLine({
   command,
   typed = false,
   delay = 0,
+  speed = 50,
   onComplete,
   className = '',
 }: CommandLineProps) {
@@ -20,7 +22,7 @@ export function CommandLine({
       <span className="text-accent text-glow-sm">$</span>
       <span className="text-text">
         {typed ? (
-          <TypeWriter text={command} delay={delay} onComplete={onComplete} showCursor={false} />
+          <TypeWriter text={command} delay={delay} speed={speed} onComplete={onComplete} showCursor={false} />
         ) : (
           command
         )}

@@ -1,11 +1,12 @@
 import { Navbar } from '../components/layout/Navbar';
 import { Footer } from '../components/layout/Footer';
+import { Hero } from '../components/sections/Hero';
 
 export default function Home() {
   return (
     <main>
       <Navbar />
-      <div id="hero" className="min-h-screen flex items-center justify-center text-muted border-b border-border">Hero Section Placeholder</div>
+      <Hero />
       <div id="about" className="min-h-screen flex items-center justify-center text-muted border-b border-border">About Section Placeholder</div>
       <div id="experience" className="min-h-screen flex items-center justify-center text-muted border-b border-border">Experience Section Placeholder</div>
       <div id="projects" className="min-h-screen flex items-center justify-center text-muted border-b border-border">Projects Section Placeholder</div>
