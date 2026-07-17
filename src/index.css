@@ -27,6 +27,7 @@
   /* Animations */
   --animate-blink: blink 1s step-end infinite;
   --animate-flicker: flicker 0.5s ease-in-out forwards;
+  --animate-fade-in: fadeIn 0.8s ease-out forwards;
 
   @keyframes blink {
     0%, 100% { opacity: 1; }
@@ -42,6 +43,11 @@
     80% { opacity: 1; }
     90% { opacity: 0.6; }
     100% { opacity: 1; }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 }
 

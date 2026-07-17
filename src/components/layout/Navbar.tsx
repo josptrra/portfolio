@@ -47,7 +47,7 @@ export function Navbar() {
   return (
     <>
       <nav className="fixed top-0 left-0 w-full z-50 bg-background/85 backdrop-blur-md border-b border-border">
-        <div className="max-w-4xl mx-auto px-8 py-4 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-8 py-4 flex items-center justify-between">
           <a href="#" className="font-mono text-accent text-sm no-underline" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }) }}>
             julio@portfolio:~$
           </a>
