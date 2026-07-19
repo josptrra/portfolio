@@ -28,6 +28,7 @@
   --animate-blink: blink 1s step-end infinite;
   --animate-flicker: flicker 0.5s ease-in-out forwards;
   --animate-fade-in: fadeIn 0.8s ease-out forwards;
+  --animate-laser-scan: laserScan 3.2s ease-in-out infinite;
 
   @keyframes blink {
     0%, 100% { opacity: 1; }
@@ -48,6 +49,12 @@
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes laserScan {
+    0% { top: 0%; opacity: 0.2; }
+    50% { top: 100%; opacity: 1; }
+    100% { top: 0%; opacity: 0.2; }
   }
 }
 

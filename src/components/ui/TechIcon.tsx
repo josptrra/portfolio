@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface TechIconProps {
   name: string;
   className?: string;
