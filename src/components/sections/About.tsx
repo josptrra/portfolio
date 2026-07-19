@@ -28,7 +28,7 @@ export function About() {
               <div className="relative w-full max-w-[320px] aspect-4/5 sm:aspect-3/4 rounded-xl overflow-hidden border border-border/90 shadow-xl group/photo">
                 {!imgError ? (
                   <img
-                    src="/profile.jpg"
+                    src="/profile.webp"
                     alt="Julio Syah Putra"
                     onError={() => setImgError(true)}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover/signal:scale-[1.04]"
