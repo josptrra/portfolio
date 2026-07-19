@@ -9,7 +9,7 @@ export function LanguageToggle() {
       <button 
         className={`bg-transparent border-none cursor-pointer p-0 transition-colors duration-200 hover:text-text ${lang === 'en' ? 'text-accent font-medium' : 'text-muted'}`} 
         onClick={() => setLang('en')}
-        aria-label="Switch to English"
+        aria-label="EN - Switch to English"
       >
         EN
       </button>
@@ -17,7 +17,7 @@ export function LanguageToggle() {
       <button 
         className={`bg-transparent border-none cursor-pointer p-0 transition-colors duration-200 hover:text-text ${lang === 'id' ? 'text-accent font-medium' : 'text-muted'}`} 
         onClick={() => setLang('id')}
-        aria-label="Switch to Indonesian"
+        aria-label="ID - Switch to Indonesian"
       >
         ID
       </button>
