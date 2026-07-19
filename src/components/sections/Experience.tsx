@@ -27,7 +27,7 @@ export function Experience() {
               <span className="text-muted hidden sm:inline-block">status: clean</span>
             </div>
 
-            <div className="flex items-center gap-2.5 font-mono text-xl md:text-3xl font-bold text-accent text-glow">
+            <div className="flex items-center gap-2.5 font-mono text-xl md:text-2xl font-bold text-accent text-glow">
               <span>$</span>
               <span>git log --career --graph</span>
             </div>
