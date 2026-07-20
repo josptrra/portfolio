@@ -171,6 +171,79 @@ export function TechIcon({ name, className = "w-3.5 h-3.5" }: TechIconProps) {
     );
   }
 
+  // 17. Python
+  if (normalized.includes('python')) {
+    return (
+      <svg className={className} viewBox="0 0 24 24" fill="none">
+        <path d="M11.8 2c-4.4 0-4.1 1.9-4.1 1.9v2h4.2v.6H6.1S3 6.1 3 10.6s2.7 4.3 2.7 4.3h1.6v-2.3s-.1-2.7 2.7-2.7h4.6s2.6.1 2.6-2.5V4.6S17.6 2 11.8 2zm-2.4 1.4a.9.9 0 1 1 0 1.8.9.9 0 0 1 0-1.8z" fill="#3776AB" />
+        <path d="M12.2 22c4.4 0 4.1-1.9 4.1-1.9v-2h-4.2v-.6h5.8s3.1.4 3.1-4.1-2.7-4.3-2.7-4.3h-1.6v2.3s.1 2.7-2.7 2.7H9.4s-2.6-.1-2.6 2.5v2.8s-.4 2.6 5.4 2.6zm2.4-1.4a.9.9 0 1 1 0-1.8.9.9 0 0 1 0-1.8z" fill="#FFD43B" />
+      </svg>
+    );
+  }
+
+  // 18. Flutter / Mobile
+  if (normalized.includes('flutter')) {
+    return (
+      <svg className={className} viewBox="0 0 24 24" fill="none">
+        <path d="M14.3 2L5 11.3l2.9 2.9L17.2 5h-2.9zm-.1 9.4l-4.4 4.4 4.4 4.4h2.9l-4.4-4.4 4.4-4.4h-2.9z" fill="#02569B" />
+        <path d="M17.1 11.4L12.7 15.8l4.4 4.4h2.9l-4.4-4.4 4.4-4.4h-2.9z" fill="#0175C2" />
+        <path d="M14.3 20.2l2.9-2.9 2.9 2.9h-5.8z" fill="#02569B" />
+      </svg>
+    );
+  }
+
+  // 19. Kotlin
+  if (normalized.includes('kotlin')) {
+    return (
+      <svg className={className} viewBox="0 0 24 24" fill="none">
+        <path d="M24 24H0V0h24L12 12z" fill="url(#kotlin-grad)" />
+        <defs>
+          <linearGradient id="kotlin-grad" x1="0" y1="24" x2="24" y2="0" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#E44857" />
+            <stop offset="0.5" stopColor="#C711E1" />
+            <stop offset="1" stopColor="#7F52FF" />
+          </linearGradient>
+        </defs>
+      </svg>
+    );
+  }
+
+  // 20. Dart
+  if (normalized.includes('dart')) {
+    return (
+      <svg className={className} viewBox="0 0 24 24" fill="none">
+        <path d="M4.5 12.5L2 15l7 7 2.5-2.5L4.5 12.5z" fill="#00B4AB" />
+        <path d="M11.5 19.5L19 12l3 3-7 7-3.5-2.5z" fill="#0081C6" />
+        <path d="M12 2L2 12l2.5 2.5L14.5 4.5 12 2z" fill="#00B4AB" />
+        <path d="M14.5 4.5L22 12l-3 3-9.5-9.5L14.5 4.5z" fill="#00B4AB" />
+      </svg>
+    );
+  }
+
+  // 21. Firebase
+  if (normalized.includes('firebase')) {
+    return (
+      <svg className={className} viewBox="0 0 24 24" fill="none">
+        <path d="M3.8 17.6l2.3-14.3 4.1 7.7-6.4 6.6z" fill="#FFA000" />
+        <path d="M14.1 9.2l1.9-3.6 4.2 12-6.1-8.4z" fill="#F57C00" />
+        <path d="M11.9 12.6l-1.7-3.2L3.8 17.6l8.1-5s0 0 0 0z" fill="#FFCA28" />
+        <path d="M3.8 17.6L12 22.2l8.2-4.6-6.1-8.4-2.2 4.4-8.1 4z" fill="#EEAB37" />
+      </svg>
+    );
+  }
+
+  // 22. CI/CD / DevOps
+  if (normalized.includes('ci') || normalized.includes('cd') || normalized.includes('devops')) {
+    return (
+      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="#6366F1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="6" cy="6" r="3" />
+        <circle cx="18" cy="18" r="3" />
+        <path d="M18 6a3 3 0 0 0-3 3v6a3 3 0 0 1-3 3" />
+        <path d="M6 9v6a3 3 0 0 0 3 3" />
+      </svg>
+    );
+  }
+
   // Default fallback code icon
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="#38BDF8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
