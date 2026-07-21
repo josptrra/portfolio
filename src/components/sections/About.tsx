@@ -86,7 +86,7 @@ export function About() {
                     <span className="text-accent text-glow-sm">SYAH PUTRA</span>
                   </h2>
                   <div className="flex items-center gap-3 mt-3">
-                    <div className="h-[2px] w-10 bg-accent-alt" />
+                    <div className="h-0.5 w-10 bg-accent-alt" />
                     <span className="font-mono text-xs text-accent-alt font-bold tracking-wider">FULLSTACK SOFTWARE ENGINEER</span>
                   </div>
                 </div>

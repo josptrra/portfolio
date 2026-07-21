@@ -1,13 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { GitHubCalendar } from 'react-github-calendar';
 import { TechIcon } from '../ui/TechIcon';
-
-interface ContributionDay {
-  date: string;
-  contributionCount: number;
-  contributionLevel: 'NONE' | 'FIRST_QUARTILE' | 'SECOND_QUARTILE' | 'THIRD_QUARTILE' | 'FOURTH_QUARTILE';
-}
-
-type Week = ContributionDay[];
 
 interface TechItem {
   name: string;
@@ -69,45 +62,14 @@ const domainsData: TechDomain[] = [
   }
 ];
 
+// Theme matching the portfolio dark phosphor palette
+const calendarTheme = {
+  light: ['#121214', '#143823', '#1e633a', '#29a356', '#00ff66'],
+  dark: ['#121214', '#143823', '#1e633a', '#29a356', '#00ff66'],
+};
+
 export function TechStack() {
-  const [weeks, setWeeks] = useState<Week[]>([]);
-  const [totalCount, setTotalCount] = useState<number | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [hoveredDay, setHoveredDay] = useState<string | null>(null);
   const [viewMode, setViewMode] = useState<'cards' | 'cli'>('cards');
-
-  // Fetch real live GitHub contribution activity for @josptrra
-  useEffect(() => {
-    let isMounted = true;
-
-    async function fetchGitHubData() {
-      try {
-        const res = await fetch('https://github-contributions-api.deno.dev/josptrra.json');
-        if (!res.ok) throw new Error('API response not OK');
-        const data = await res.json();
-        
-        if (isMounted && data.contributions && Array.isArray(data.contributions)) {
-          setWeeks(data.contributions);
-          setTotalCount(data.totalContributions || 171);
-          setLoading(false);
-        }
-      } catch (err) {
-        console.warn('Live GitHub API fetch fallback triggered:', err);
-        if (isMounted) {
-          // Reliable fallback matching @josptrra profile structure
-          setTotalCount(171);
-          setLoading(false);
-        }
-      }
-    }
-
-    fetchGitHubData();
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-
-  const months = ['Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'];
 
   return (
     <section id="stack" className="min-h-screen py-24 px-4 md:px-8 max-w-6xl mx-auto flex flex-col justify-center">
@@ -146,7 +108,7 @@ export function TechStack() {
       </div>
 
       <div className="space-y-10 animate-fade-in">
-        {/* 1. REAL GITHUB CONTRIBUTIONS CARD */}
+        {/* 1. REAL GITHUB CONTRIBUTIONS VIA REACT-GITHUB-CALENDAR */}
         <div className="bg-surface border border-border rounded-2xl p-5 md:p-7 shadow-2xl hover:border-accent/40 transition-all duration-500">
           {/* Header */}
           <div className="flex items-center justify-between mb-6 flex-wrap gap-4">
@@ -161,7 +123,7 @@ export function TechStack() {
                   <h3 className="font-display text-lg md:text-xl font-bold text-text">GitHub Contributions</h3>
                   <span className="inline-flex items-center gap-1.5 bg-accent/10 border border-accent/30 text-accent font-mono text-[10px] px-2.5 py-0.5 rounded-full">
                     <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-                    Live API
+                    react-github-calendar
                   </span>
                 </div>
                 <p className="font-mono text-[11px] text-muted mt-0.5">// REALTIME_ACTIVITY_FEED</p>
@@ -180,74 +142,20 @@ export function TechStack() {
             </a>
           </div>
 
-          {/* Activity Heatmap Grid Container */}
-          <div className="overflow-x-auto pb-2 pt-1">
-            <div className="min-w-[720px]">
-              {/* Month Headers */}
-              <div className="flex text-[10px] font-mono text-muted mb-2.5 pl-4">
-                {months.map((m, i) => (
-                  <span key={i} className="flex-1 text-center">{m}</span>
-                ))}
-              </div>
-
-              {/* 52-Week Grid */}
-              {loading && weeks.length === 0 ? (
-                <div className="py-8 flex justify-center items-center font-mono text-xs text-accent animate-pulse">
-                  Fetching live contributions for @josptrra...
-                </div>
-              ) : (
-                <div className="flex gap-[3px] justify-between">
-                  {weeks.map((week, wIdx) => (
-                    <div key={wIdx} className="flex flex-col gap-[3px]">
-                      {week.map((day, dIdx) => {
-                        let bgClass = 'bg-background/90 border border-border/40';
-                        if (day.contributionLevel === 'FIRST_QUARTILE' || day.contributionCount === 1) {
-                          bgClass = 'bg-accent/25 border border-accent/40';
-                        } else if (day.contributionLevel === 'SECOND_QUARTILE' || (day.contributionCount >= 2 && day.contributionCount <= 3)) {
-                          bgClass = 'bg-accent/55 border border-accent/60';
-                        } else if (day.contributionLevel === 'THIRD_QUARTILE' || (day.contributionCount >= 4 && day.contributionCount <= 6)) {
-                          bgClass = 'bg-accent/80 border border-accent/90 shadow-glow-sm';
-                        } else if (day.contributionLevel === 'FOURTH_QUARTILE' || day.contributionCount > 6) {
-                          bgClass = 'bg-accent border border-accent text-glow-sm shadow-glow-md';
-                        }
-
-                        return (
-                          <div
-                            key={dIdx}
-                            onMouseEnter={() => setHoveredDay(`${day.date}: ${day.contributionCount} contributions`)}
-                            onMouseLeave={() => setHoveredDay(null)}
-                            className={`w-3 h-3 rounded-[2.5px] transition-all hover:scale-150 hover:z-20 cursor-pointer ${bgClass}`}
-                          />
-                        );
-                      })}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* Footer Stats & Legend */}
-          <div className="flex items-center justify-between border-t border-border/60 pt-4 mt-3 font-mono text-xs text-muted flex-wrap gap-2">
-            <span>
-              {hoveredDay ? (
-                <span className="text-accent font-bold text-glow-sm">{hoveredDay}</span>
-              ) : (
-                <span>
-                  <strong className="text-accent font-bold text-glow-sm">{totalCount ?? 171}</strong> contributions in the last year
-                </span>
-              )}
-            </span>
-
-            <div className="flex items-center gap-1.5 text-[10px]">
-              <span>Less</span>
-              <span className="w-2.5 h-2.5 rounded-[2px] bg-background border border-border/40" />
-              <span className="w-2.5 h-2.5 rounded-[2px] bg-accent/25 border border-accent/40" />
-              <span className="w-2.5 h-2.5 rounded-[2px] bg-accent/55 border border-accent/60" />
-              <span className="w-2.5 h-2.5 rounded-[2px] bg-accent/80 border border-accent/90" />
-              <span className="w-2.5 h-2.5 rounded-[2px] bg-accent border border-accent" />
-              <span>More</span>
-            </div>
+          {/* GitHub Calendar Container */}
+          <div className="overflow-x-auto py-2 flex justify-center items-center text-text font-mono text-xs [&_svg]:max-w-full">
+            <GitHubCalendar
+              username="josptrra"
+              colorScheme="dark"
+              theme={calendarTheme}
+              blockSize={12}
+              blockMargin={4}
+              fontSize={12}
+              style={{
+                color: '#8E8E9A',
+                fontFamily: 'JetBrains Mono, monospace'
+              }}
+            />
           </div>
         </div>
 

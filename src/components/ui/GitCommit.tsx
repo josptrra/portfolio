@@ -30,7 +30,7 @@ export function GitCommit({ experience, isLast = false }: GitCommitProps) {
 
         {/* Continuous Connector Line Going Straight Down Column Center */}
         {!isLast && (
-          <div className="w-[2px] flex-1 bg-border group-hover:bg-accent/40 transition-colors my-1" />
+          <div className="w-0.5 flex-1 bg-border group-hover:bg-accent/40 transition-colors my-1" />
         )}
       </div>
 
