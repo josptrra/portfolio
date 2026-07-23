@@ -1,15 +1,22 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, Navigate } from 'react-router-dom';
 import { projects } from '../data/projects';
 import { Navbar } from '../components/layout/Navbar';
 import { Footer } from '../components/layout/Footer';
+import { TerminalLoader } from '../components/ui/TerminalLoader';
 
 export default function ProjectDetail() {
   const { slug } = useParams<{ slug: string }>();
+  const [loading, setLoading] = useState(true);
 
-  // Scroll to top when page mounts
+  // Scroll to top & simulate smooth module loading when page mounts
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
+    setLoading(true);
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1200);
+    return () => clearTimeout(timer);
   }, [slug]);
 
   // Lookup project by slug
@@ -18,6 +25,11 @@ export default function ProjectDetail() {
   // Redirect to home if slug is invalid
   if (!project) {
     return <Navigate to="/" replace />;
+  }
+
+  // Render compact TerminalLoader during loading phase
+  if (loading) {
+    return <TerminalLoader />;
   }
 
   return (

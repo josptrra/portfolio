@@ -59,11 +59,7 @@ export function Navbar() {
 
   const scrollToSection = (id: string) => {
     if (isProjectPage) {
-      navigate('/');
-      setTimeout(() => {
-        const el = document.getElementById(id);
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
+      navigate('/', { state: { scrollTo: id } });
       return;
     }
 
@@ -93,7 +89,7 @@ export function Navbar() {
           {isProjectPage ? (
             <button
               type="button"
-              onClick={() => navigate('/')}
+              onClick={() => navigate('/', { state: { scrollTo: 'projects' } })}
               className="text-accent hover:underline flex items-center gap-1.5 font-bold cursor-pointer border-none bg-transparent p-0"
             >
               <span>← back</span>

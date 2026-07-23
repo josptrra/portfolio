@@ -8,7 +8,10 @@ interface ProjectCardProps {
 
 export function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <div className="bg-surface border border-border rounded-xl p-5 md:p-6 transition-all duration-300 hover:border-accent/60 hover:shadow-glow-sm flex flex-col justify-between group relative overflow-hidden">
+    <Link
+      to={`/project/${project.slug}`}
+      className="bg-surface border border-border rounded-xl p-5 md:p-6 transition-all duration-300 hover:border-accent/60 hover:shadow-glow-sm flex flex-col justify-between group relative overflow-hidden no-underline cursor-pointer block"
+    >
       <div>
         {/* Card Header: Folder Icon & Name + Badge */}
         <div className="flex items-center justify-between gap-3 mb-3">
@@ -51,13 +54,10 @@ export function ProjectCard({ project }: ProjectCardProps) {
       {/* Footer Link */}
       <div className="pt-3 border-t border-border/60 flex items-center justify-between font-mono text-xs">
         <span className="text-muted text-[10px]">// VIEW_SPECS</span>
-        <Link
-          to={`/project/${project.slug}`}
-          className="inline-flex items-center gap-1.5 text-accent font-bold hover:underline text-glow-sm cursor-pointer"
-        >
+        <span className="inline-flex items-center gap-1.5 text-accent font-bold group-hover:underline text-glow-sm">
           <span>[ cd ./{project.slug} → ]</span>
-        </Link>
+        </span>
       </div>
-    </div>
+    </Link>
   );
 }
