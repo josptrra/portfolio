@@ -1,77 +1,135 @@
-# React + TypeScript + Vite
+# ⚡ Julio Syah Putra — Terminal & Cyberpunk Developer Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<div align="center">
 
-Currently, two official plugins are available:
+![Portfolio Banner](https://img.shields.io/badge/PORTFOLIO-CYBERPUNK%20TERMINAL-00FF66?style=for-the-badge&logo=gnu-bash&logoColor=000)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+[![React 19](https://img.shields.io/badge/React-19.0-61DAFB?style=flat-square&logo=react&logoColor=black)](https://react.dev/)
+[![Vite](https://img.shields.io/badge/Vite-8.0-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Tailwind CSS v4](https://img.shields.io/badge/Tailwind_CSS-v4.0-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-00FF66?style=flat-square)](LICENSE)
 
-## React Compiler
+*A high-performance, developer-centric interactive portfolio built with React 19, Vite, and Tailwind CSS v4 featuring a Cyberpunk & Terminal HUD design system.*
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+[🌐 Live Demo](https://github.com/josptrra/portfolio) • [📫 Get in Touch](mailto:juliosp2107@gmail.com) • [📄 Report Bug](https://github.com/josptrra/portfolio/issues)
 
-Note: This will impact Vite dev & build performances.
+</div>
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 📖 Overview
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+This portfolio is crafted for engineers who appreciate clean code, command-line interfaces, and modern web aesthetics. It combines a retro-futuristic cyberpunk terminal HUD with smooth micro-interactions, responsive design, and dynamic brand theme glows.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Key Highlights
+- 🖥️ **Interactive Terminal CLI**: Interactive command-line simulation supporting commands like `whoami`, `cat status.txt`, `help`, `contact`, and navigation shortcuts.
+- 🎨 **Dynamic Brand Hover Systems**: Skill pills and social media icons adaptively glow on hover using custom hex-tinted background overlays and box shadows matching their brand identities.
+- 📊 **GitHub Activity HUD**: Integrated live GitHub contribution calendar with commit statistics, streaks, and repository telemetry.
+- 🌐 **Bilingual Support (EN / ID)**: Instant locale translation switching across the entire portfolio using custom hooks.
+- 🚀 **Modern Tech Architecture**: Powered by React 19, Vite 8, React Compiler, and Tailwind CSS v4.
+- 📱 **Mobile-First Responsive Design**: Fluid typography and dynamic grid layouts tailored for mobile, tablet, and ultra-wide screens.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+---
 
-```
+## 🛠️ Tech Stack
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+| Category | Technologies Used |
+|---|---|
+| **Core Framework** | React 19, React Router DOM v7, Vite 8, React Compiler |
+| **Language** | TypeScript (Strict Mode) |
+| **Styling & Design** | Tailwind CSS v4, Vanilla CSS Design System, Glassmorphism, Custom Glows |
+| **Icons & Typography** | Simple Icons (`react-icons/si`), Font Awesome 6 (`react-icons/fa6`), JetBrains Mono, Space Grotesk, Inter |
+| **Integrations** | `react-github-calendar` |
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 📁 Project Structure
 
 ```
+Portofolio/
+├── public/                # Static public assets (favicons, manifest)
+├── src/
+│   ├── assets/            # Project images and graphics
+│   ├── components/
+│   │   ├── layout/        # Navbar, Footer, Background Grids
+│   │   ├── sections/      # Hero, Contact, TechStack, Projects, About
+│   │   └── ui/            # TechIcon, CommandLine, TelemetryHUD, ProjectCard
+│   ├── context/           # Language and UI state providers
+│   ├── data/              # Projects case studies & technical data
+│   ├── hooks/             # Custom hooks (useLanguage, etc.)
+│   ├── pages/             # Home page & ProjectDetail views
+│   ├── App.tsx            # Main application router
+│   ├── index.css          # Design system tokens & utility classes
+│   └── main.tsx           # Application entry point
+├── package.json           # Scripts and dependency declarations
+├── tsconfig.json          # TypeScript workspace configuration
+└── vite.config.ts         # Vite build tool configuration
+```
+
+---
+
+## 🚀 Getting Started
+
+Follow these instructions to run the project locally on your machine.
+
+### Prerequisites
+- **Node.js**: `v18.0.0` or higher
+- **npm**: `v9.0.0` or higher
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/josptrra/portfolio.git
+   cd portfolio
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Start the development server**
+   ```bash
+   npm run dev
+   ```
+   Open `http://localhost:5173` in your browser.
+
+4. **Build for production**
+   ```bash
+   npm run build
+   ```
+
+5. **Preview production build**
+   ```bash
+   npm run preview
+   ```
+
+---
+
+## 🏆 Featured Projects
+
+- **Manggala CBT Platform**: Computer-Based Testing platform engineered for SMA Titian Teras Jambi with auto-save exam engine logic.
+- **Kasir Kilat — POS System**: High-speed Point of Sale application created for Tech Euphoria Competition (*Runner-up Winner*).
+- **AeroTrack Flight Monitor**: Real-time flight monitoring and data pipeline visualization system.
+- **Typewriter Communication Tool**: Accessible web tool built during AIESEC volunteering for deaf communities.
+
+---
+
+## 📬 Connect & Contact
+
+- **Name**: Julio Syah Putra
+- **Location**: Palembang, Indonesia (WIB / UTC+7)
+- **Email**: [juliosp2107@gmail.com](mailto:juliosp2107@gmail.com)
+- **GitHub**: [@josptrra](https://github.com/josptrra)
+- **LinkedIn**: [juliosyahputra](https://linkedin.com/in/josptrra)
+- **Instagram**: [@josptrra](https://instagram.com/josptrra)
+
+---
+
+<div align="center">
+
+Designed & Built with 💚 by **Julio Syah Putra** © 2026
+
+</div>
