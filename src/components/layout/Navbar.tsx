@@ -13,7 +13,20 @@ const navItems = [
 export function Navbar() {
   const [activeSection, setActiveSection] = useState<string>('');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState<boolean>(false);
 
+  // Track window scroll to toggle navbar bottom border & background blur
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Section observer for active link highlights
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -46,9 +59,22 @@ export function Navbar() {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 w-full z-50 bg-background/85 backdrop-blur-md border-b border-border">
+      <nav
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+          isScrolled
+            ? 'bg-background/85 backdrop-blur-md border-b border-border shadow-md'
+            : 'bg-transparent border-b border-transparent'
+        }`}
+      >
         <div className="max-w-7xl mx-auto px-8 py-4 flex items-center justify-between">
-          <a href="#" className="font-mono text-accent text-sm no-underline" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }) }}>
+          <a
+            href="#"
+            className="font-mono text-accent text-sm no-underline"
+            onClick={(e) => {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+          >
             julio@portfolio:~$
           </a>
 
@@ -58,7 +84,9 @@ export function Navbar() {
               <a
                 key={item.id}
                 href={`#${item.id}`}
-                className={`font-sans text-sm no-underline transition-colors duration-200 hover:text-text ${activeSection === item.id ? 'text-accent' : 'text-muted'}`}
+                className={`font-sans text-sm no-underline transition-colors duration-200 hover:text-text ${
+                  activeSection === item.id ? 'text-accent' : 'text-muted'
+                }`}
                 onClick={(e) => {
                   e.preventDefault();
                   scrollToSection(item.id);
@@ -72,7 +100,7 @@ export function Navbar() {
           {/* Right Section: Language Toggle & Mobile Menu */}
           <div className="flex items-center gap-4">
             <LanguageToggle />
-            <button 
+            <button
               className="block md:hidden bg-transparent border-none text-text text-2xl cursor-pointer p-0"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Toggle menu"
@@ -84,13 +112,19 @@ export function Navbar() {
       </nav>
 
       {/* Mobile Nav Overlay */}
-      <div className={`fixed top-0 left-0 w-full h-screen bg-background/95 z-40 flex flex-col justify-center items-center transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-y-0' : '-translate-y-full'}`}>
+      <div
+        className={`fixed top-0 left-0 w-full h-screen bg-background/95 z-40 flex flex-col justify-center items-center transition-transform duration-300 ease-in-out ${
+          isMobileMenuOpen ? 'translate-y-0' : '-translate-y-full'
+        }`}
+      >
         <div className="flex flex-col items-center gap-8 mb-16">
           {navItems.map((item) => (
             <a
               key={item.id}
               href={`#${item.id}`}
-              className={`font-mono text-xl no-underline ${activeSection === item.id ? 'text-accent' : 'text-text'}`}
+              className={`font-mono text-xl no-underline ${
+                activeSection === item.id ? 'text-accent' : 'text-text'
+              }`}
               onClick={(e) => {
                 e.preventDefault();
                 scrollToSection(item.id);
