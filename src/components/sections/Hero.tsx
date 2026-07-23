@@ -3,29 +3,11 @@ import { CommandLine } from '../ui/CommandLine';
 import { BlinkingCursor } from '../ui/BlinkingCursor';
 import { TypeWriter } from '../ui/TypeWriter';
 import { useLanguage } from '../../hooks/useLanguage';
-import { TerminalWindow } from '../layout/TerminalWindow';
-
-const treeText = `.
-├── about
-│   ├── profile.ts
-│   └── skills.json
-├── career
-│   ├── bangkit_2024.md
-│   ├── telkom_digistar.md
-│   └── kominfo.md
-├── projects
-│   ├── government_cbt.tsx
-│   └── sign_language.tsx
-└── contact
-    ├── email.sh
-    └── linkedin.sh
-
-4 directories, 9 files`;
+import { TelemetryHUD } from '../ui/TelemetryHUD';
 
 export function Hero() {
   const { t } = useLanguage();
   const [step, setStep] = useState(0);
-  const [treeStep, setTreeStep] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -38,7 +20,6 @@ export function Hero() {
   useEffect(() => {
     if (isMobile) {
       setStep(7);
-      setTreeStep(1);
     }
   }, [isMobile]);
 
@@ -122,7 +103,11 @@ export function Hero() {
               <div className="flex flex-wrap gap-4 items-center opacity-0 animate-flicker">
                 <a 
                   href="#projects" 
-                  className="px-6 py-3 bg-accent/10 border border-accent text-accent font-mono text-sm hover:bg-accent/20 transition-colors no-underline"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="px-6 py-3 bg-accent/10 border border-accent text-accent font-mono text-sm hover:bg-accent/20 transition-colors no-underline cursor-pointer"
                 >
                   [{t('hero', 'cta_projects')}]
                 </a>
@@ -146,29 +131,10 @@ export function Hero() {
           )}
         </div>
 
-        {/* RIGHT COLUMN: Directory Tree Terminal */}
+        {/* RIGHT COLUMN: Telemetry HUD Card */}
         <div className="lg:col-span-5 hidden lg:block">
           <div className="animate-fade-in" style={{ animationFillMode: 'forwards' }}>
-            <TerminalWindow title="tree ~/portfolio">
-              <div className="font-mono text-sm p-4 h-[350px]">
-                <CommandLine 
-                  command="tree ." 
-                  typed={!isMobile}
-                  delay={500}
-                  speed={80}
-                  onComplete={() => setTreeStep(1)}
-                />
-                {(treeStep >= 1 || isMobile) && (
-                  <div className="mt-4 text-muted">
-                    {isMobile ? (
-                      <span className="whitespace-pre-wrap">{treeText}</span>
-                    ) : (
-                      <TypeWriter text={treeText} speed={15} showCursor={false} />
-                    )}
-                  </div>
-                )}
-              </div>
-            </TerminalWindow>
+            <TelemetryHUD />
           </div>
         </div>
       </div>
