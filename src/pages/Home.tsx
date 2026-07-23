@@ -6,6 +6,8 @@ import { Experience } from '../components/sections/Experience';
 import { Projects } from '../components/sections/Projects';
 import { TechStack } from '../components/sections/TechStack';
 
+import { Contact } from '../components/sections/Contact';
+
 export default function Home() {
   return (
     <main>
@@ -15,7 +17,7 @@ export default function Home() {
       <Experience />
       <Projects />
       <TechStack />
-      <div id="contact" className="min-h-screen flex items-center justify-center text-muted">Contact Section Placeholder</div>
+      <Contact />
       <Footer />
     </main>
   );
