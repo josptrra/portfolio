@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { LanguageToggle } from '../ui/LanguageToggle';
 
 const navItems = [
   { id: 'about', label: 'about' },
@@ -96,9 +95,8 @@ export function Navbar() {
             ))}
           </div>
 
-          {/* Right Section: Language Toggle & Mobile Menu */}
+          {/* Right Section: Mobile Menu Button */}
           <div className="flex items-center gap-4">
-            <LanguageToggle />
             <button
               className="block md:hidden bg-transparent border-none text-text text-2xl cursor-pointer p-0"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -132,7 +130,6 @@ export function Navbar() {
               [{item.label}]
             </a>
           ))}
-          <LanguageToggle />
         </div>
       </div>
     </>
