@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const navItems = [
   { id: 'about', label: 'about' },
@@ -12,6 +13,10 @@ export function Navbar() {
   const [activeSection, setActiveSection] = useState<string>('');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const isProjectPage = location.pathname.startsWith('/project/');
 
   // Track window scroll to toggle navbar bottom border & background blur
   useEffect(() => {
@@ -26,6 +31,11 @@ export function Navbar() {
 
   // Section observer for active link highlights
   useEffect(() => {
+    if (isProjectPage) {
+      setActiveSection('projects');
+      return;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -45,15 +55,28 @@ export function Navbar() {
     });
 
     return () => observer.disconnect();
-  }, []);
+  }, [isProjectPage]);
 
   const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
+    if (isProjectPage) {
+      navigate('/');
+      setTimeout(() => {
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+      return;
+    }
+
+    const element = elementById(id);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
       setIsMobileMenuOpen(false);
     }
   };
+
+  function elementById(id: string) {
+    return document.getElementById(id);
+  }
 
   return (
     <>
@@ -64,47 +87,63 @@ export function Navbar() {
             : 'bg-transparent border-b border-transparent'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-8 py-4 flex items-center justify-between">
-          <a
-            href="#"
-            className="font-mono text-accent text-sm no-underline"
-            onClick={(e) => {
-              e.preventDefault();
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
-          >
-            julio@portfolio:~$
-          </a>
-
-          {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-6">
-            {navItems.map((item) => (
-              <a
-                key={item.id}
-                href={`#${item.id}`}
-                className={`font-sans text-sm no-underline transition-colors duration-200 hover:text-text ${
-                  activeSection === item.id ? 'text-accent' : 'text-muted'
-                }`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollToSection(item.id);
-                }}
-              >
-                [{item.label}]
-              </a>
-            ))}
-          </div>
-
-          {/* Right Section: Mobile Menu Button */}
-          <div className="flex items-center gap-4">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 py-4 flex items-center justify-between font-mono text-xs md:text-sm">
+          
+          {/* Left: ← back link on project page, or brand logo on home */}
+          {isProjectPage ? (
             <button
-              className="block md:hidden bg-transparent border-none text-text text-2xl cursor-pointer p-0"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label="Toggle menu"
+              type="button"
+              onClick={() => navigate('/')}
+              className="text-accent hover:underline flex items-center gap-1.5 font-bold cursor-pointer border-none bg-transparent p-0"
             >
-              {isMobileMenuOpen ? '✕' : '☰'}
+              <span>← back</span>
             </button>
+          ) : (
+            <a
+              href="#"
+              className="text-accent no-underline font-mono"
+              onClick={(e) => {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+            >
+              julio@portfolio:~$
+            </a>
+          )}
+
+          {/* Right on Desktop: Nav Links (Desktop Only) */}
+          <div className="hidden md:flex items-center gap-6">
+            {navItems.map((item) => {
+              const isActive = isProjectPage ? item.id === 'projects' : activeSection === item.id;
+              const labelText = isActive ? `[_${item.label}]` : `[${item.label}]`;
+
+              return (
+                <a
+                  key={item.id}
+                  href={`/#${item.id}`}
+                  className={`no-underline transition-colors duration-200 hover:text-text ${
+                    isActive ? 'text-accent font-bold' : 'text-muted'
+                  }`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToSection(item.id);
+                  }}
+                >
+                  {labelText}
+                </a>
+              );
+            })}
           </div>
+
+          {/* Right on Mobile: Hamburger Button (Mobile Only) */}
+          <button
+            type="button"
+            className="block md:hidden bg-transparent border-none text-text text-xl cursor-pointer p-0"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            {isMobileMenuOpen ? '✕' : '☰'}
+          </button>
         </div>
       </nav>
 
@@ -114,22 +153,25 @@ export function Navbar() {
           isMobileMenuOpen ? 'translate-y-0' : '-translate-y-full'
         }`}
       >
-        <div className="flex flex-col items-center gap-8 mb-16">
-          {navItems.map((item) => (
-            <a
-              key={item.id}
-              href={`#${item.id}`}
-              className={`font-mono text-xl no-underline ${
-                activeSection === item.id ? 'text-accent' : 'text-text'
-              }`}
-              onClick={(e) => {
-                e.preventDefault();
-                scrollToSection(item.id);
-              }}
-            >
-              [{item.label}]
-            </a>
-          ))}
+        <div className="flex flex-col items-center gap-8 mb-16 font-mono text-lg">
+          {navItems.map((item) => {
+            const isActive = isProjectPage ? item.id === 'projects' : activeSection === item.id;
+            const labelText = isActive ? `[_${item.label}]` : `[${item.label}]`;
+
+            return (
+              <a
+                key={item.id}
+                href={`/#${item.id}`}
+                className={`no-underline ${isActive ? 'text-accent font-bold' : 'text-text'}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToSection(item.id);
+                }}
+              >
+                {labelText}
+              </a>
+            );
+          })}
         </div>
       </div>
     </>
