@@ -35,6 +35,8 @@ const calendarTheme = {
 export function TechStack() {
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
   const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [totalCommits, setTotalCommits] = useState<number | null>(null);
+  const [activeStreak, setActiveStreak] = useState<number | null>(null);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -43,12 +45,33 @@ export function TechStack() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Filter last 4 months (April, May, June, July) for mobile screens
-  const selectLastFourMonths = (
+  // Dynamically process contribution data from GitHub API
+  const processContributionData = (
     contributions: Array<{ date: string; count: number; level: 0 | 1 | 2 | 3 | 4 }>
   ) => {
+    // 1. Calculate live total commit sum dynamically
+    const sum = contributions.reduce((acc, curr) => acc + curr.count, 0);
+    if (sum > 0 && totalCommits !== sum) {
+      setTotalCommits(sum);
+    }
+
+    // 2. Calculate current active streak dynamically
+    let streak = 0;
+    const sorted = [...contributions].reverse();
+    for (const day of sorted) {
+      if (day.count > 0) {
+        streak++;
+      } else if (streak > 0) {
+        break;
+      }
+    }
+    if (streak > 0 && activeStreak !== streak) {
+      setActiveStreak(streak);
+    }
+
     if (!isMobile) return contributions;
 
+    // Filter last 4 months (April, May, June, July) for mobile screens
     const today = new Date();
     const fourMonthsAgo = new Date();
     fourMonthsAgo.setMonth(today.getMonth() - 3);
@@ -129,16 +152,20 @@ export function TechStack() {
           </a>
         </div>
 
-        {/* HUD Telemetry Stat Bar Strip */}
+        {/* HUD Telemetry Stat Bar Strip (Dynamic Real-time Values) */}
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-1">
           <div className="bg-background/80 border border-border/80 rounded-2xl p-3 flex flex-col justify-center font-mono">
             <span className="text-[10px] text-muted uppercase tracking-wider">Commits This Year</span>
-            <span className="text-sm sm:text-base font-bold text-accent">176+ Commits</span>
+            <span className="text-sm sm:text-base font-bold text-accent">
+              {totalCommits !== null ? `${totalCommits} Commits` : 'Loading...'}
+            </span>
           </div>
 
           <div className="bg-background/80 border border-border/80 rounded-2xl p-3 flex flex-col justify-center font-mono">
             <span className="text-[10px] text-muted uppercase tracking-wider">Active Streak</span>
-            <span className="text-sm sm:text-base font-bold text-text">14 Days Continuous</span>
+            <span className="text-sm sm:text-base font-bold text-text">
+              {activeStreak !== null ? `${activeStreak} Days Continuous` : 'Calculating...'}
+            </span>
           </div>
 
           <div className="bg-background/80 border border-border/80 rounded-2xl p-3 col-span-2 sm:col-span-1 flex flex-col justify-center font-mono">
@@ -153,7 +180,7 @@ export function TechStack() {
             username="josptrra"
             colorScheme="dark"
             theme={calendarTheme}
-            transformData={selectLastFourMonths}
+            transformData={processContributionData}
             blockSize={isMobile ? 15 : 12}
             blockMargin={isMobile ? 4.5 : 4}
             fontSize={isMobile ? 14 : 12}

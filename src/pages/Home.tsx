@@ -15,7 +15,6 @@ export default function Home() {
       <Experience />
       <Projects />
       <TechStack />
-      <div id="awards" className="min-h-screen flex items-center justify-center text-muted border-b border-border">Awards Section Placeholder</div>
       <div id="contact" className="min-h-screen flex items-center justify-center text-muted">Contact Section Placeholder</div>
       <Footer />
     </main>
