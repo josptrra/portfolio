@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { SiGithub, SiInstagram } from 'react-icons/si';
 import { FaLinkedin } from 'react-icons/fa6';
+import { sendContactMessage } from '../../services/messageService';
 
 export function Contact() {
   const [copied, setCopied] = useState(false);
@@ -21,17 +22,21 @@ export function Contact() {
     setTimeout(() => setCopied(false), 2500);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formState.name || !formState.email || !formState.message) return;
 
     setIsSubmitting(true);
-    setTimeout(() => {
+    try {
+      await sendContactMessage(formState);
+    } catch (err) {
+      console.error('Submission Error:', err);
+    } finally {
       setIsSubmitting(false);
       setSubmitted(true);
       setFormState({ name: '', email: '', message: '' });
       setTimeout(() => setSubmitted(false), 4000);
-    }, 1000);
+    }
   };
 
   return (
