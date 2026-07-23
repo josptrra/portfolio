@@ -1,36 +1,40 @@
 import { useEffect, useState } from 'react';
 import { useParams, Navigate } from 'react-router-dom';
-import { projects } from '../data/projects';
 import { Navbar } from '../components/layout/Navbar';
 import { Footer } from '../components/layout/Footer';
 import { TerminalLoader } from '../components/ui/TerminalLoader';
+import { getProjectBySlug } from '../services/projectService';
+import { type Project } from '../data/projects';
 
 export default function ProjectDetail() {
   const { slug } = useParams<{ slug: string }>();
+  const [project, setProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
+  const [activeImgIdx, setActiveImgIdx] = useState(0);
 
-  // Scroll to top & simulate smooth module loading when page mounts
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
+    if (!slug) return;
+
     setLoading(true);
-    const timer = setTimeout(() => {
+    getProjectBySlug(slug).then((data) => {
+      setProject(data);
+      setActiveImgIdx(0);
       setLoading(false);
-    }, 1200);
-    return () => clearTimeout(timer);
+    });
   }, [slug]);
 
-  // Lookup project by slug
-  const project = projects.find((p) => p.slug === slug);
+  if (loading) {
+    return <TerminalLoader />;
+  }
 
-  // Redirect to home if slug is invalid
   if (!project) {
     return <Navigate to="/" replace />;
   }
 
-  // Render compact TerminalLoader during loading phase
-  if (loading) {
-    return <TerminalLoader />;
-  }
+  const projectImages = project.images && project.images.length > 0
+    ? project.images
+    : [project.image || "/images/manggala-cbt.png"];
 
   return (
     <div className="min-h-screen bg-background text-text flex flex-col justify-between font-sans">
@@ -55,13 +59,35 @@ export default function ProjectDetail() {
           </p>
         </div>
 
-        {/* 3. PROJECT MOCKUP PREVIEW IMAGE */}
-        <div className="bg-surface/90 border border-border/80 rounded-2xl p-2 sm:p-3 shadow-2xl overflow-hidden group">
-          <img
-            src={project.image || "/images/manggala-cbt.png"}
-            alt={project.title}
-            className="w-full h-auto rounded-xl object-cover border border-border/40"
-          />
+        {/* 3. PROJECT MOCKUP PREVIEW IMAGE GALLERY */}
+        <div className="space-y-3">
+          <div className="bg-surface/90 border border-border/80 rounded-2xl p-2 sm:p-3 shadow-2xl overflow-hidden group">
+            <img
+              src={projectImages[activeImgIdx]}
+              alt={project.title}
+              className="w-full h-auto rounded-xl object-cover border border-border/40 transition-all duration-300"
+            />
+          </div>
+
+          {/* Gallery Thumbnails (Rendered if > 1 image) */}
+          {projectImages.length > 1 && (
+            <div className="flex items-center gap-3 overflow-x-auto pb-1">
+              {projectImages.map((img, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => setActiveImgIdx(idx)}
+                  className={`w-20 h-14 rounded-lg overflow-hidden border-2 transition-all cursor-pointer p-0 shrink-0 ${
+                    activeImgIdx === idx
+                      ? 'border-accent shadow-[0_0_10px_rgba(0,255,102,0.4)] opacity-100 scale-105'
+                      : 'border-border/60 opacity-60 hover:opacity-100'
+                  }`}
+                >
+                  <img src={img} alt={`Preview ${idx + 1}`} className="w-full h-full object-cover" />
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* 4. OVERVIEW SECTION */}

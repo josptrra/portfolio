@@ -6,7 +6,8 @@ export interface Project {
   tech: string[];         // tech tags
   badge: string;          // e.g. "> In Production", "> 🏆 Runner-up"
   role?: string;          // role in project
-  image?: string;         // image path
+  image?: string;         // primary image path
+  images?: string[];      // multiple images gallery array
   detail: {
     problem: string;
     contributions: string[];

@@ -1,7 +1,19 @@
-import { projects } from '../../data/projects';
+import { useState, useEffect } from 'react';
 import { ProjectCard } from '../ui/ProjectCard';
+import { getProjects } from '../../services/projectService';
+import { type Project, projects as fallbackProjects } from '../../data/projects';
 
 export function Projects() {
+  const [projectList, setProjectList] = useState<Project[]>(fallbackProjects);
+
+  useEffect(() => {
+    getProjects().then((data) => {
+      if (data && data.length > 0) {
+        setProjectList(data);
+      }
+    });
+  }, []);
+
   return (
     <section id="projects" className="min-h-screen py-24 px-4 md:px-8 max-w-6xl mx-auto flex flex-col justify-center">
       {/* Top Section Command Bar */}
@@ -12,12 +24,12 @@ export function Projects() {
             $ ls -la ~/projects/
           </span>
         </div>
-        <span className="hidden sm:block text-muted">// FEATURED_BUILDS ({projects.length} DIRECTORIES)</span>
+        <span className="hidden sm:block text-muted">// FEATURED_BUILDS ({projectList.length} DIRECTORIES)</span>
       </div>
 
       {/* Projects 2-Column Responsive Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fade-in">
-        {projects.map((project) => (
+        {projectList.map((project) => (
           <ProjectCard key={project.slug} project={project} />
         ))}
       </div>
