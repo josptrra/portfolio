@@ -29,6 +29,12 @@
   --animate-flicker: flicker 0.5s ease-in-out forwards;
   --animate-fade-in: fadeIn 0.8s ease-out forwards;
   --animate-laser-scan: laserScan 3.2s ease-in-out infinite;
+  --animate-slide-in: slideIn 2.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(12px) scale(0.99); }
+    to { opacity: 1; transform: translateX(0) scale(1); }
+  }
 
   @keyframes blink {
     0%, 100% { opacity: 1; }

@@ -25,9 +25,22 @@ export default function ProjectDetail() {
     });
   }, [slug]);
 
+  const [isHovered, setIsHovered] = useState(false);
+
   const projectImages = project?.images && project.images.length > 0
     ? project.images
     : (project?.image ? [project.image] : []);
+
+  // Auto-slide every 3.5 seconds (paused when hovered or modal open)
+  useEffect(() => {
+    if (!projectImages || projectImages.length <= 1 || isModalOpen || isHovered) return;
+
+    const timer = setInterval(() => {
+      setActiveImgIdx((prev) => (prev === projectImages.length - 1 ? 0 : prev + 1));
+    }, 4000);
+
+    return () => clearInterval(timer);
+  }, [projectImages, isModalOpen, isHovered]);
 
   const handlePrevImg = (e?: React.MouseEvent) => {
     e?.stopPropagation();
@@ -89,12 +102,15 @@ export default function ProjectDetail() {
         <div className="space-y-3">
           <div
             onClick={() => setIsModalOpen(true)}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
             className="bg-surface/90 border border-border/80 rounded-2xl p-2 sm:p-3 shadow-2xl overflow-hidden group cursor-zoom-in relative"
           >
             <img
+              key={activeImgIdx}
               src={projectImages[activeImgIdx]}
               alt={project.title}
-              className="max-w-full h-auto mx-auto rounded-xl border border-border/40 transition-all duration-300 block shadow-md group-hover:scale-[1.005]"
+              className="max-w-full h-auto mx-auto rounded-xl border border-border/40 transition-all duration-300 block shadow-md group-hover:scale-[1.005] animate-slide-in"
             />
 
             {/* Left & Right Slider Controls on Main Preview */}
@@ -288,9 +304,10 @@ export default function ProjectDetail() {
               )}
 
               <img
+                key={activeImgIdx}
                 src={projectImages[activeImgIdx]}
                 alt={`${project.title} Full View`}
-                className="max-w-full max-h-[78vh] object-contain rounded-xl shadow-2xl border border-border/40"
+                className="max-w-full max-h-[78vh] object-contain rounded-xl shadow-2xl border border-border/40 animate-slide-in"
               />
             </div>
 
