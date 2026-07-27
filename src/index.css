@@ -66,6 +66,8 @@
   body {
     @apply bg-background text-text font-mono antialiased;
   }
+
+
   
   ::selection {
     background-color: rgba(57, 255, 20, 0.2);
@@ -95,18 +97,4 @@
   }
 }
 
-/* CRT Scan Lines & Noise Texture */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 9999;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(0, 0, 0, 0.03) 2px,
-    rgba(0, 0, 0, 0.03) 4px
-  );
-}
+

@@ -11,6 +11,7 @@ export default function ProjectDetail() {
   const [project, setProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
   const [activeImgIdx, setActiveImgIdx] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
@@ -24,6 +25,35 @@ export default function ProjectDetail() {
     });
   }, [slug]);
 
+  const projectImages = project?.images && project.images.length > 0
+    ? project.images
+    : (project?.image ? [project.image] : []);
+
+  const handlePrevImg = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setActiveImgIdx((prev) => (prev === 0 ? projectImages.length - 1 : prev - 1));
+  };
+
+  const handleNextImg = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setActiveImgIdx((prev) => (prev === projectImages.length - 1 ? 0 : prev + 1));
+  };
+
+  // Keyboard Navigation: ESC to close, Left/Right arrows to slide
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsModalOpen(false);
+      if (e.key === 'ArrowLeft') {
+        setActiveImgIdx((prev) => (prev === 0 ? projectImages.length - 1 : prev - 1));
+      }
+      if (e.key === 'ArrowRight') {
+        setActiveImgIdx((prev) => (prev === projectImages.length - 1 ? 0 : prev + 1));
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [projectImages.length]);
+
   if (loading) {
     return <TerminalLoader />;
   }
@@ -31,10 +61,6 @@ export default function ProjectDetail() {
   if (!project) {
     return <Navigate to="/" replace />;
   }
-
-  const projectImages = project.images && project.images.length > 0
-    ? project.images
-    : [project.image || "/images/manggala-cbt.png"];
 
   return (
     <div className="min-h-screen bg-background text-text flex flex-col justify-between font-sans">
@@ -59,25 +85,54 @@ export default function ProjectDetail() {
           </p>
         </div>
 
-        {/* 3. PROJECT MOCKUP PREVIEW IMAGE GALLERY */}
+        {/* 3. PROJECT MOCKUP PREVIEW IMAGE GALLERY WITH SLIDER */}
         <div className="space-y-3">
-          <div className="bg-surface/90 border border-border/80 rounded-2xl p-2 sm:p-3 shadow-2xl overflow-hidden group">
+          <div
+            onClick={() => setIsModalOpen(true)}
+            className="bg-surface/90 border border-border/80 rounded-2xl p-2 sm:p-3 shadow-2xl overflow-hidden group cursor-zoom-in relative"
+          >
             <img
               src={projectImages[activeImgIdx]}
               alt={project.title}
-              className="w-full h-auto rounded-xl object-cover border border-border/40 transition-all duration-300"
+              className="max-w-full h-auto mx-auto rounded-xl border border-border/40 transition-all duration-300 block shadow-md group-hover:scale-[1.005]"
             />
+
+            {/* Left & Right Slider Controls on Main Preview */}
+            {projectImages.length > 1 && (
+              <>
+                <button
+                  type="button"
+                  onClick={handlePrevImg}
+                  aria-label="Previous Image"
+                  className="absolute left-4 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background border border-border/80 text-accent font-bold w-9 h-9 rounded-full shadow-lg transition-all opacity-0 group-hover:opacity-100 hover:scale-110 cursor-pointer z-10 flex items-center justify-center text-lg"
+                >
+                  ‹
+                </button>
+                <button
+                  type="button"
+                  onClick={handleNextImg}
+                  aria-label="Next Image"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background border border-border/80 text-accent font-bold w-9 h-9 rounded-full shadow-lg transition-all opacity-0 group-hover:opacity-100 hover:scale-110 cursor-pointer z-10 flex items-center justify-center text-lg"
+                >
+                  ›
+                </button>
+              </>
+            )}
+
+            <div className="absolute top-4 right-4 bg-background/80 border border-border/60 text-accent text-[10px] font-mono px-2.5 py-1 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-xs flex items-center gap-1.5 shadow-sm pointer-events-none">
+              <span>🔍 click to expand</span>
+            </div>
           </div>
 
           {/* Gallery Thumbnails (Rendered if > 1 image) */}
           {projectImages.length > 1 && (
-            <div className="flex items-center gap-3 overflow-x-auto pb-1">
+            <div className="flex items-center gap-3 overflow-x-auto pb-2 pt-1">
               {projectImages.map((img, idx) => (
                 <button
                   key={idx}
                   type="button"
                   onClick={() => setActiveImgIdx(idx)}
-                  className={`w-20 h-14 rounded-lg overflow-hidden border-2 transition-all cursor-pointer p-0 shrink-0 ${
+                  className={`w-20 h-14 rounded-lg overflow-hidden border-2 transition-all cursor-pointer p-0 shrink-0 bg-surface ${
                     activeImgIdx === idx
                       ? 'border-accent shadow-[0_0_10px_rgba(0,255,102,0.4)] opacity-100 scale-105'
                       : 'border-border/60 opacity-60 hover:opacity-100'
@@ -179,6 +234,93 @@ export default function ProjectDetail() {
         )}
 
       </main>
+
+      {/* 8. NEAR-FULLSCREEN IMAGE LIGHTBOX MODAL */}
+      {isModalOpen && (
+        <div
+          className="fixed inset-0 z-50 bg-background/90 backdrop-blur-md flex items-center justify-center p-4 md:p-8 animate-fade-in"
+          onClick={() => setIsModalOpen(false)}
+        >
+          <div
+            className="bg-surface/95 border border-border/90 rounded-2xl max-w-6xl w-full max-h-[92vh] flex flex-col overflow-hidden shadow-2xl relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Window Header */}
+            <div className="flex items-center justify-between text-xs font-mono border-b border-border/60 px-5 py-3.5 shrink-0 bg-background/60">
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
+                <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
+                <span className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
+                <span className="text-muted text-[11px] ml-2 font-mono">
+                  ~/projects/{project.slug}/full_view_{activeImgIdx + 1}.png
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsModalOpen(false)}
+                className="text-muted hover:text-accent font-mono text-xs cursor-pointer bg-transparent border border-border/60 hover:border-accent/40 px-3 py-1 rounded-lg transition-all"
+              >
+                [ESC] CLOSE ✕
+              </button>
+            </div>
+
+            {/* Modal Image Viewport with Slider Controls */}
+            <div className="p-4 md:p-6 overflow-auto flex items-center justify-center grow bg-background/40 relative">
+              {projectImages.length > 1 && (
+                <>
+                  <button
+                    type="button"
+                    onClick={handlePrevImg}
+                    aria-label="Previous Image"
+                    className="absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background border border-border/80 text-accent font-bold w-11 h-11 rounded-full shadow-2xl transition-all hover:scale-110 cursor-pointer z-20 flex items-center justify-center text-xl"
+                  >
+                    ‹
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleNextImg}
+                    aria-label="Next Image"
+                    className="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background border border-border/80 text-accent font-bold w-11 h-11 rounded-full shadow-2xl transition-all hover:scale-110 cursor-pointer z-20 flex items-center justify-center text-xl"
+                  >
+                    ›
+                  </button>
+                </>
+              )}
+
+              <img
+                src={projectImages[activeImgIdx]}
+                alt={`${project.title} Full View`}
+                className="max-w-full max-h-[78vh] object-contain rounded-xl shadow-2xl border border-border/40"
+              />
+            </div>
+
+            {/* Bottom Thumbnail Bar inside Modal if > 1 image */}
+            {projectImages.length > 1 && (
+              <div className="border-t border-border/60 px-4 py-2.5 flex items-center justify-between gap-4 font-mono text-xs bg-background/80 shrink-0">
+                <div className="flex items-center gap-2 overflow-x-auto">
+                  {projectImages.map((img, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => setActiveImgIdx(idx)}
+                      className={`w-14 h-10 rounded-md overflow-hidden border transition-all cursor-pointer p-0 shrink-0 ${
+                        activeImgIdx === idx
+                          ? 'border-accent shadow-[0_0_8px_rgba(0,255,102,0.4)] opacity-100'
+                          : 'border-border/60 opacity-50 hover:opacity-100'
+                      }`}
+                    >
+                      <img src={img} alt={`Thumb ${idx + 1}`} className="w-full h-full object-cover" />
+                    </button>
+                  ))}
+                </div>
+                <span className="text-muted text-[11px] shrink-0 font-mono">
+                  {activeImgIdx + 1} of {projectImages.length}
+                </span>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       <Footer />
     </div>

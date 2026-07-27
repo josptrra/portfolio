@@ -1,5 +1,5 @@
 import { supabase } from '../lib/supabase';
-import { type Project, projects as fallbackProjects } from '../data/projects';
+import { type Project } from '../data/projects';
 
 export interface SupabaseProjectRow {
   id: string;
@@ -36,7 +36,7 @@ function mapRowToProject(row: SupabaseProjectRow): Project {
     image: row.image || imagesList[0],
     images: imagesList,
     detail: {
-      problem: row.problem,
+      problem: row.problem || '',
       contributions: row.contributions || [],
       links: row.links || [],
     },
@@ -44,8 +44,7 @@ function mapRowToProject(row: SupabaseProjectRow): Project {
 }
 
 /**
- * Fetch all projects from Supabase database.
- * Falls back to local static array if database table is empty or error occurs.
+ * Fetch all projects 100% dynamically from Supabase database only.
  */
 export async function getProjects(): Promise<Project[]> {
   try {
@@ -54,20 +53,20 @@ export async function getProjects(): Promise<Project[]> {
       .select('*')
       .order('created_at', { ascending: true });
 
-    if (error || !data || data.length === 0) {
-      if (error) console.warn('[projectService] Supabase error, using fallback:', error.message);
-      return fallbackProjects;
+    if (error || !data) {
+      if (error) console.error('[projectService] Supabase error:', error.message);
+      return [];
     }
 
     return (data as SupabaseProjectRow[]).map(mapRowToProject);
   } catch (err) {
-    console.warn('[projectService] Fetch failed, using fallback:', err);
-    return fallbackProjects;
+    console.error('[projectService] Fetch failed:', err);
+    return [];
   }
 }
 
 /**
- * Fetch a single project by slug from Supabase.
+ * Fetch a single project by slug 100% dynamically from Supabase database only.
  */
 export async function getProjectBySlug(slug: string): Promise<Project | null> {
   try {
@@ -78,14 +77,13 @@ export async function getProjectBySlug(slug: string): Promise<Project | null> {
       .single();
 
     if (error || !data) {
-      // Fallback to local static search
-      const fallback = fallbackProjects.find((p) => p.slug === slug);
-      return fallback || null;
+      if (error) console.error('[projectService] Error fetching project by slug:', error.message);
+      return null;
     }
 
     return mapRowToProject(data as SupabaseProjectRow);
-  } catch {
-    const fallback = fallbackProjects.find((p) => p.slug === slug);
-    return fallback || null;
+  } catch (err) {
+    console.error('[projectService] Exception fetching project by slug:', err);
+    return null;
   }
 }
