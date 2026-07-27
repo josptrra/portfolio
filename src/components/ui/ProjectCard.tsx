@@ -7,6 +7,8 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({ project }: ProjectCardProps) {
+  const coverImage = project.image || (project.images && project.images.length > 0 ? project.images[0] : null);
+
   return (
     <Link
       to={`/project/${project.slug}`}
@@ -36,6 +38,23 @@ export function ProjectCard({ project }: ProjectCardProps) {
         <p className="text-text/80 font-sans text-xs md:text-sm leading-relaxed mb-4">
           {project.description}
         </p>
+
+        {/* Project Image Preview Thumbnail */}
+        {coverImage ? (
+          <div className="mb-4 overflow-hidden rounded-xl border border-border/80 bg-background/60 relative group/img aspect-video">
+            <img
+              src={coverImage}
+              alt={project.title}
+              className="w-full h-full object-cover transition-transform duration-500 group-hover/img:scale-105 group-hover:brightness-105 block"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-linear-to-t from-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-2.5">
+              <span className="text-[10px] font-mono text-accent bg-background/90 border border-accent/40 px-2 py-0.5 rounded shadow-sm">
+                Click to view specs & gallery →
+              </span>
+            </div>
+          </div>
+        ) : null}
 
         {/* Tech Stack Pills with Brand TechIcons */}
         <div className="flex flex-wrap gap-1.5 mb-5 font-mono text-[11px]">
