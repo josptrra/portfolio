@@ -99,7 +99,7 @@ export function Footer() {
 
         {/* Bottom copyright bar */}
         <div className="border-t border-border/40 pt-6 flex flex-col sm:flex-row justify-between items-center text-[11px] text-muted gap-2">
-          <span>© {new Date().getFullYear()} Julio Saputra</span>
+          <span>© {new Date().getFullYear()} Julio Syah Putra</span>
           <span className="text-muted/50">react + vite // handcrafted</span>
         </div>
 
