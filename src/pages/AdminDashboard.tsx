@@ -491,6 +491,17 @@ export default function AdminDashboard() {
               </div>
 
               <div>
+                <label className="text-muted block mb-1">Your Role in Project:</label>
+                <input
+                  type="text"
+                  value={formData.role}
+                  onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+                  className="w-full bg-background border border-border/80 text-text p-2.5 rounded-xl font-mono outline-none focus:border-accent"
+                  placeholder="Fullstack Developer"
+                />
+              </div>
+
+              <div>
                 <label className="text-muted block mb-1">Tech Tags (comma separated):</label>
                 <input
                   type="text"

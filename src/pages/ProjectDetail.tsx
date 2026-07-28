@@ -201,7 +201,7 @@ export default function ProjectDetail() {
               <span>Role</span>
             </h2>
             <p className="font-mono text-xs md:text-sm text-text/90 font-medium">
-              {project.role || "Frontend Developer & Project Manager"}
+              {project.role || "Project Lead & Developer"}
             </p>
           </section>
 
