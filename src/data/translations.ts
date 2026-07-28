@@ -13,9 +13,9 @@ export const translations: Record<Lang, Record<string, Record<string, string>>> 
     about: {
       name_desc: "fullstack developer & problem solver",
       synopsis: "julio [--build] [--lead] [--learn]",
-      description: "Computer Science student at Universitas Sriwijaya (GPA: 3.95/4.00) who builds things that work. From government platforms to CBT systems, from teaching deaf communities to winning hackathons.",
+      description: "Computer Science graduate from Universitas Sriwijaya (GPA: 3.95/4.00) who builds things that work.",
       personality: "Doesn't believe in skill percentage bars. Believes in shipping.",
-      aiesec: "Once learned sign language to teach. Still building tools to communicate."
+      aiesec: "Building high-performance web applications with precision & purpose."
     },
     experience: {
       title: "Career Log"

@@ -18,13 +18,13 @@ export const experiences: Experience[] = [
     branch: "(HEAD -> main)",
     role: "Frontend Dev & Project Manager",
     company: "Manggala Team",
-    type: "Contract / Remote",
+    type: "Freelance",
     period: "Mar 2026 - Present",
     description: "Architected and engineered a high-throughput Computer-Based Testing (CBT) platform tailored for educational institutions. Overseeing sprint lifecycles and cross-functional team execution.",
     bullets: [
       "Designed real-time CBT exam platform serving high-concurrent student sessions.",
       "Implemented debounced auto-save mechanisms to eliminate test submission data loss.",
-      "Led weekly sprint planning and task allocation via Jira for 5 cross-functional developers."
+      "Collaborated and aligned sprint planning and task allocation via Jira for 3 cross-functional developers."
     ],
     skills: ["React", "TypeScript", "TailwindCSS", "Jira", "State Management"],
     stat: "Built CBT Engine",
@@ -32,7 +32,7 @@ export const experiences: Experience[] = [
   },
   {
     hash: "c7b9e3a",
-    role: "Backend Developer",
+    role: "Cloud Engineer & Backend Developer",
     company: "Bangkit Academy (Google, GoTo, Traveloka)",
     type: "Bootcamp / Specialization",
     period: "Sep 2024 - Jan 2025",
@@ -49,16 +49,16 @@ export const experiences: Experience[] = [
   {
     hash: "a1f8d2c",
     role: "Frontend Developer",
-    company: "Digistar (Telkom Indonesia)",
+    company: "Digistar Class by Telkom Indonesia",
     type: "Mentorship & Internship",
     period: "Aug 2024 - Oct 2024",
     description: "Selected as one of the top candidates out of 12,000+ national applicants in Telkom's flagship tech accelerator program.",
     bullets: [
-      "Developed high-performance web dashboard interfaces using React and modern CSS systems.",
-      "Collaborated with senior Telkom engineers to implement accessibility & UI component libraries.",
-      "Graduated among the top-tier candidates in frontend engineering excellence."
+      "Graduated in the Top 29 final candidates out of 500 mentee.",
+      "Developed real-world company case study prototypes using React and JavaScript within a collaborative team.",
+      "Structured Lean Canvas and Business Model Canvas (BMC) for product validation, rapid prototyping, and final pitching."
     ],
-    skills: ["React", "JavaScript (ES6+)", "Component Design", "UI/UX", "Git Workflow"],
+    skills: ["React", "JavaScript", "Lean Canvas", "Business Model Canvas", "Product Management", "Leadership"],
     stat: "Top 29 from 12,000+ Applicants",
     isCurrent: false
   },
@@ -72,10 +72,9 @@ export const experiences: Experience[] = [
     bullets: [
       "Built responsive, accessible web portals using Next.js, React Query, and TailwindCSS.",
       "Connected Strapi headless CMS content structures for dynamic municipal news publishing.",
-      "Reduced initial page load speed by 35% through image optimization & server-side rendering."
     ],
     skills: ["Next.js", "Strapi CMS", "React Query", "TailwindCSS", "SSR"],
-    stat: "35% Faster Page Load",
+    stat: "Municipal Web Portal",
     isCurrent: false
   }
 ];

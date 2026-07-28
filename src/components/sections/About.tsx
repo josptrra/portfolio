@@ -1,9 +1,26 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLanguage } from '../../hooks/useLanguage';
+import { experiences } from '../../data/experiences';
+import { techStack } from '../../data/techStack';
+import { getProjects } from '../../services/projectService';
 
 export function About() {
   const { t } = useLanguage();
   const [imgError, setImgError] = useState(false);
+  const [projectCount, setProjectCount] = useState<number>(3);
+
+  useEffect(() => {
+    getProjects().then((data) => {
+      if (data && data.length > 0) {
+        setProjectCount(data.length);
+      }
+    });
+  }, []);
+
+  const experienceCount = experiences.length;
+  const stackCount = techStack.reduce((acc, cat) => {
+    return acc + cat.entries.reduce((sum, entry) => sum + entry.values.split(',').map((s) => s.trim()).length, 0);
+  }, 0);
 
   return (
     <section id="about" className="min-h-screen py-24 px-4 md:px-8 max-w-6xl mx-auto flex flex-col justify-center">
@@ -156,12 +173,18 @@ export function About() {
               <span className="w-2.5 h-2.5 rounded-full bg-accent animate-pulse shadow-glow-sm" />
               <span className="text-accent font-bold text-xs md:text-sm text-glow-sm">AVAILABLE FOR HIRE</span>
             </div>
-            <div className="flex items-center gap-3 text-[10px] text-muted">
-              <a href="#experience" className="text-accent-alt hover:text-accent transition-colors underline underline-offset-2 decoration-border">experience(1)</a>
+            <div className="flex items-center gap-3 text-[10px] text-muted font-mono font-semibold">
+              <a href="#experience" className="text-accent-alt hover:text-accent transition-colors underline underline-offset-2 decoration-border">
+                experience({experienceCount})
+              </a>
               <span>/</span>
-              <a href="#projects" className="text-accent-alt hover:text-accent transition-colors underline underline-offset-2 decoration-border">projects(1)</a>
+              <a href="#projects" className="text-accent-alt hover:text-accent transition-colors underline underline-offset-2 decoration-border">
+                projects({projectCount}++)
+              </a>
               <span>/</span>
-              <a href="#stack" className="text-accent-alt hover:text-accent transition-colors underline underline-offset-2 decoration-border">stack(1)</a>
+              <a href="#stack" className="text-accent-alt hover:text-accent transition-colors underline underline-offset-2 decoration-border">
+                stack({stackCount})
+              </a>
             </div>
           </div>
         </div>
