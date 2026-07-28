@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { LanguageProvider } from './context/LanguageContext';
@@ -41,9 +41,9 @@ function App() {
               </Suspense>
             }
           />
-          {/* Secret Admin CMS Routes */}
           <Route path="/sys-admin-root-8823" element={<AdminLogin />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
     </LanguageProvider>
