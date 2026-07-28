@@ -33,7 +33,7 @@ export function Footer() {
   };
 
   return (
-    <footer className="mt-24 border-t border-border/60 bg-background font-mono">
+    <footer className="mt-12 md:mt-16 border-t border-border/60 bg-background font-mono">
       <div className="max-w-7xl mx-auto px-6 md:px-12 py-14 space-y-12">
 
         {/* Top row: brand, navigate, connect aligned with justify-between */}

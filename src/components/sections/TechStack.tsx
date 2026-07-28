@@ -84,17 +84,17 @@ export function TechStack() {
   };
 
   return (
-    <section id="stack" className="min-h-screen py-24 px-4 md:px-8 max-w-5xl mx-auto flex flex-col justify-center space-y-12">
+    <section id="stack" className="py-16 md:py-20 px-4 md:px-8 max-w-5xl mx-auto flex flex-col justify-center space-y-8">
       
       {/* 1. TOP COMMAND LINE HEADER BAR */}
-      <div className="flex items-center justify-between font-mono text-xs md:text-sm border-b border-border/80 pb-3">
-        <div className="flex items-center gap-2.5">
-          <span className="w-2.5 h-2.5 rounded-full bg-accent animate-pulse shadow-glow-sm" />
-          <span className="text-accent font-bold tracking-wider text-glow-sm">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-2 font-mono text-xs md:text-sm border-b border-border/80 pb-3">
+        <div className="flex items-center gap-2 min-w-0">
+          <span className="w-2.5 h-2.5 rounded-full bg-accent animate-pulse shrink-0 shadow-glow-sm" />
+          <span className="text-accent font-bold tracking-wider text-glow-sm truncate text-[11px] sm:text-xs md:text-sm">
             $ git log --author="josptrra" --stats
           </span>
         </div>
-        <span className="text-muted tracking-wider text-[11px] font-mono">
+        <span className="text-muted tracking-wider text-[10px] sm:text-[11px] font-mono shrink-0 pl-4 sm:pl-0">
           // TELEMETRY_STREAM :: {isMobile ? 'LAST 4 MONTHS' : '52 WEEKS'}
         </span>
       </div>
@@ -195,14 +195,14 @@ export function TechStack() {
       {/* 3. TECH STACK PILLS SECTION */}
       <div className="space-y-8 animate-fade-in pt-4">
         {/* Terminal Header Bar for Tech Stack */}
-        <div className="flex items-center justify-between font-mono text-xs md:text-sm border-b border-border/80 pb-3">
-          <div className="flex items-center gap-2.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-accent animate-pulse shadow-glow-sm" />
-            <span className="text-accent font-bold tracking-wider text-glow-sm">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-2 font-mono text-xs md:text-sm border-b border-border/80 pb-3">
+          <div className="flex items-center gap-2 min-w-0">
+            <span className="w-2.5 h-2.5 rounded-full bg-accent animate-pulse shrink-0 shadow-glow-sm" />
+            <span className="text-accent font-bold tracking-wider text-glow-sm truncate text-[11px] sm:text-xs md:text-sm">
               $ cat ~/stack/skills.json
             </span>
           </div>
-          <span className="text-muted tracking-wider text-[11px] font-mono">
+          <span className="text-muted tracking-wider text-[10px] sm:text-[11px] font-mono shrink-0 pl-4 sm:pl-0">
             // CORE_TECHNOLOGIES (15)
           </span>
         </div>
