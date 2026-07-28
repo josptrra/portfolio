@@ -50,7 +50,7 @@ export function Footer() {
               className="text-left bg-transparent border-none p-0 cursor-pointer group font-mono"
             >
               <span className="text-lg font-bold text-text group-hover:text-accent transition-colors tracking-wide font-display">
-                julio<span className="text-accent">.dev</span>
+                juliosp<span className="text-accent">.tech</span>
               </span>
             </button>
             <p className="font-sans text-[13px] text-muted leading-relaxed">
@@ -60,7 +60,7 @@ export function Footer() {
 
           {/* 2. Navigate */}
           <div>
-            <h4 className="text-[11px] text-muted uppercase tracking-widest mb-3.5">// navigate</h4>
+            <h3 className="text-[11px] text-muted uppercase tracking-widest mb-3.5">// navigate</h3>
             <div className="flex flex-wrap gap-x-5 gap-y-2">
               {navItems.map((item) => (
                 <button
@@ -77,7 +77,7 @@ export function Footer() {
 
           {/* 3. Connect */}
           <div>
-            <h4 className="text-[11px] text-muted uppercase tracking-widest mb-3.5">// connect</h4>
+            <h3 className="text-[11px] text-muted uppercase tracking-widest mb-3.5">// connect</h3>
             <div className="flex items-center gap-2.5">
               {socials.map((s) => (
                 <a
@@ -100,7 +100,7 @@ export function Footer() {
         {/* Bottom copyright bar */}
         <div className="border-t border-border/40 pt-6 flex flex-col sm:flex-row justify-between items-center text-[11px] text-muted gap-2">
           <span>© {new Date().getFullYear()} Julio Syah Putra</span>
-          <span className="text-muted/50">react + vite // handcrafted</span>
+          <span className="text-muted">react + vite // handcrafted</span>
         </div>
 
       </div>

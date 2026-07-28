@@ -26,28 +26,28 @@ export function TechIcon({ name, className = "w-5 h-5" }: TechIconProps) {
 
   // 1. React
   if (normalized.includes('react')) {
-    return <SiReact className={`${className} text-[#61DAFB]`} />;
+    return <SiReact className={`${className} text-[#61DAFB]`} role="img" aria-label={`${name} icon`} />;
   }
 
   // 2. Next.js
   if (normalized.includes('next')) {
-    return <SiNextdotjs className={`${className} text-text`} />;
+    return <SiNextdotjs className={`${className} text-text`} role="img" aria-label={`${name} icon`} />;
   }
 
   // 3. TypeScript
   if (normalized.includes('typescript') || normalized === 'ts') {
-    return <SiTypescript className={`${className} text-[#3178C6]`} />;
+    return <SiTypescript className={`${className} text-[#3178C6]`} role="img" aria-label={`${name} icon`} />;
   }
 
   // 4. JavaScript
   if (normalized.includes('javascript') || (normalized.includes('js') && !normalized.includes('node') && !normalized.includes('express'))) {
-    return <SiJavascript className={`${className} text-[#F7DF1E]`} />;
+    return <SiJavascript className={`${className} text-[#F7DF1E]`} role="img" aria-label={`${name} icon`} />;
   }
 
   // 5. Node.js (Authentic Green Hexagon Logo)
   if (normalized.includes('node')) {
     return (
-      <svg className={className} viewBox="0 0 24 24" fill="none">
+      <svg className={className} viewBox="0 0 24 24" fill="none" role="img" aria-label={`${name} icon`}>
         <rect width="24" height="24" rx="5" fill="#339933" />
         <path d="M12 4.2L4.5 8.5v7l7.5 4.3 7.5-4.3v-7L12 4.2zm4.5 10.3l-4.5 2.6-4.5-2.6V9.5l4.5-2.6 4.5 2.6v5z" fill="#FFFFFF" />
       </svg>
@@ -57,7 +57,7 @@ export function TechIcon({ name, className = "w-5 h-5" }: TechIconProps) {
   // 6. Express.js (Authentic Minimalist "ex" Badge Logo)
   if (normalized.includes('express')) {
     return (
-      <svg className={className} viewBox="0 0 24 24" fill="none">
+      <svg className={className} viewBox="0 0 24 24" fill="none" role="img" aria-label={`${name} icon`}>
         <rect width="24" height="24" rx="5" fill="#000000" stroke="#444444" strokeWidth="1" />
         <text x="12" y="16.5" fontStyle="italic" fontFamily="sans-serif" fontSize="13" fontWeight="900" fill="#FFFFFF" textAnchor="middle" letterSpacing="-1">ex</text>
       </svg>
@@ -66,13 +66,13 @@ export function TechIcon({ name, className = "w-5 h-5" }: TechIconProps) {
 
   // 7. PostgreSQL
   if (normalized.includes('postgres') || normalized.includes('sql')) {
-    return <SiPostgresql className={`${className} text-[#4169E1]`} />;
+    return <SiPostgresql className={`${className} text-[#4169E1]`} role="img" aria-label={`${name} icon`} />;
   }
 
   // 8. Firebase (Authentic Multi-Colored 3D Flame Logo)
   if (normalized.includes('firebase')) {
     return (
-      <svg className={className} viewBox="0 0 24 24" fill="none">
+      <svg className={className} viewBox="0 0 24 24" fill="none" role="img" aria-label={`${name} icon`}>
         <path d="M3.8 17.6l2.3-14.3 4.1 7.7-6.4 6.6z" fill="#FFA000" />
         <path d="M14.1 9.2l1.9-3.6 4.2 12-6.1-8.4z" fill="#F57C00" />
         <path d="M11.9 12.6l-1.7-3.2L3.8 17.6l8.1-5z" fill="#FFCA28" />
@@ -83,58 +83,58 @@ export function TechIcon({ name, className = "w-5 h-5" }: TechIconProps) {
 
   // 9. Python
   if (normalized.includes('python')) {
-    return <SiPython className={`${className} text-[#3776AB]`} />;
+    return <SiPython className={`${className} text-[#3776AB]`} role="img" aria-label={`${name} icon`} />;
   }
 
   // 10. TailwindCSS
   if (normalized.includes('tailwind')) {
-    return <SiTailwindcss className={`${className} text-[#06B6D4]`} />;
+    return <SiTailwindcss className={`${className} text-[#06B6D4]`} role="img" aria-label={`${name} icon`} />;
   }
 
   // 11. Git
   if (normalized.includes('git')) {
-    return <SiGit className={`${className} text-[#F05032]`} />;
+    return <SiGit className={`${className} text-[#F05032]`} role="img" aria-label={`${name} icon`} />;
   }
 
   // 12. Google Cloud
   if (normalized.includes('gcp') || normalized.includes('cloud')) {
-    return <SiGooglecloud className={`${className} text-[#4285F4]`} />;
+    return <SiGooglecloud className={`${className} text-[#4285F4]`} role="img" aria-label={`${name} icon`} />;
   }
 
   // 13. Jira
   if (normalized.includes('jira') || normalized.includes('agile')) {
-    return <SiJira className={`${className} text-[#2684FF]`} />;
+    return <SiJira className={`${className} text-[#2684FF]`} role="img" aria-label={`${name} icon`} />;
   }
 
   // 14. Flutter
   if (normalized.includes('flutter')) {
-    return <SiFlutter className={`${className} text-[#02569B]`} />;
+    return <SiFlutter className={`${className} text-[#02569B]`} role="img" aria-label={`${name} icon`} />;
   }
 
   // 15. Kotlin
   if (normalized.includes('kotlin')) {
-    return <SiKotlin className={`${className} text-[#7F52FF]`} />;
+    return <SiKotlin className={`${className} text-[#7F52FF]`} role="img" aria-label={`${name} icon`} />;
   }
 
   // 16. Dart
   if (normalized.includes('dart')) {
-    return <SiDart className={`${className} text-[#00B4AB]`} />;
+    return <SiDart className={`${className} text-[#00B4AB]`} role="img" aria-label={`${name} icon`} />;
   }
 
   // 17. Vite
   if (normalized.includes('vite')) {
-    return <SiVite className={`${className} text-[#646CFF]`} />;
+    return <SiVite className={`${className} text-[#646CFF]`} role="img" aria-label={`${name} icon`} />;
   }
 
   // 18. CI/CD / GitHub Actions / DevOps
   if (normalized.includes('ci') || normalized.includes('cd') || normalized.includes('devops')) {
-    return <SiGithubactions className={`${className} text-[#2088FF]`} />;
+    return <SiGithubactions className={`${className} text-[#2088FF]`} role="img" aria-label={`${name} icon`} />;
   }
 
   // 19. REST API (Sleek API Code Route Symbol `</>`)
   if (normalized.includes('rest') || normalized.includes('api') || normalized.includes('jwt')) {
     return (
-      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="#10B981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="#10B981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" role="img" aria-label={`${name} icon`}>
         <polyline points="16 18 22 12 16 6" />
         <polyline points="8 6 2 12 8 18" />
       </svg>
@@ -143,7 +143,7 @@ export function TechIcon({ name, className = "w-5 h-5" }: TechIconProps) {
 
   // Default Code Fallback
   return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" role="img" aria-label={`${name} icon`}>
       <polyline points="16 18 22 12 16 6" />
       <polyline points="8 6 2 12 8 18" />
     </svg>
