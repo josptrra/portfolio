@@ -64,9 +64,11 @@ export function Hero() {
               href="/cv.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 py-3 text-muted hover:text-text font-mono text-sm transition-colors border border-border/80 hover:border-text/60 rounded-xl no-underline"
+              download="Julio_Syah_Putra_CV.pdf"
+              className="px-6 py-3 text-muted hover:text-text font-mono text-sm transition-colors border border-border/80 hover:border-text/60 rounded-xl no-underline inline-flex items-center gap-2"
             >
-              {t('hero', 'cta_cv')}
+              <span>{t('hero', 'cta_cv')}</span>
+              <span className="text-xs">↓</span>
             </a>
           </div>
 
