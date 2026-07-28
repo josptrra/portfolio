@@ -23,7 +23,7 @@ export function About() {
   }, 0);
 
   return (
-    <section id="about" className="min-h-screen py-24 px-4 md:px-8 max-w-6xl mx-auto flex flex-col justify-center">
+    <section id="about" className="py-16 md:py-20 px-4 md:px-8 max-w-6xl mx-auto flex flex-col justify-center">
       {/* Section Header Bar */}
       <div className="mb-6 flex items-center justify-between font-mono text-xs text-muted border-b border-border/80 pb-3">
         <div className="flex items-center gap-2">

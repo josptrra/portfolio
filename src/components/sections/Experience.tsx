@@ -3,7 +3,7 @@ import { experiences } from '../../data/experiences';
 
 export function Experience() {
   return (
-    <section id="experience" className="min-h-screen py-24 px-4 md:px-8 max-w-5xl mx-auto flex flex-col justify-center">
+    <section id="experience" className="py-16 md:py-20 px-4 md:px-8 max-w-5xl mx-auto flex flex-col justify-center">
       {/* Terminal Header Card */}
       <div className="mb-12 bg-surface border border-border rounded-xl p-5 md:p-6 shadow-md">
         <div className="flex items-center justify-between">
