@@ -72,7 +72,7 @@ export function TelemetryHUD() {
         <div className="bg-background/80 border border-border/70 p-3 rounded-xl hover:border-accent/40 hover:bg-background transition-all duration-300 hover:-translate-y-0.5 group/card opacity-0 animate-[fadeIn_0.6s_ease-out_600ms_forwards]">
           <span className="font-mono text-[9px] text-muted tracking-wider block uppercase">EXPERIENCE</span>
           <span className="font-display text-lg font-bold text-text group-hover/card:text-accent transition-colors mt-0.5 block">3+ Yrs</span>
-          <span className="font-mono text-[9px] text-accent-alt">Fullstack</span>
+          <span className="font-mono text-[9px] text-accent-alt">Frontend</span>
         </div>
 
         <div className="bg-background/80 border border-border/70 p-3 rounded-xl hover:border-accent/40 hover:bg-background transition-all duration-300 hover:-translate-y-0.5 group/card opacity-0 animate-[fadeIn_0.6s_ease-out_800ms_forwards]">

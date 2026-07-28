@@ -4,14 +4,14 @@ export const translations: Record<Lang, Record<string, Record<string, string>>> 
   en: {
     hero: {
       subtitle: "Software Engineer & Builder",
-      current: "Currently: Fullstack Dev · Building CBT platforms",
+      current: "Currently: Frontend Dev · Building CBT platforms",
       previous: "Previously: Bangkit 2024 · Telkom Digistar · KOMINFO",
       status: "Open to opportunities. Based in Palembang, ID.",
       cta_projects: "View Projects ↓",
       cta_cv: "Download CV"
     },
     about: {
-      name_desc: "fullstack developer & problem solver",
+      name_desc: "Frontend developer & problem solver",
       synopsis: "julio [--build] [--lead] [--learn]",
       description: "Computer Science graduate from Universitas Sriwijaya (GPA: 3.95/4.00) who builds things that work.",
       personality: "Doesn't believe in skill percentage bars. Believes in shipping.",
@@ -54,14 +54,14 @@ export const translations: Record<Lang, Record<string, Record<string, string>>> 
   id: {
     hero: {
       subtitle: "Software Engineer & Builder",
-      current: "Saat ini: Fullstack Dev · Membangun platform CBT",
+      current: "Saat ini: Frontend Dev · Membangun platform CBT",
       previous: "Sebelumnya: Bangkit 2024 · Telkom Digistar · KOMINFO",
       status: "Terbuka untuk kesempatan baru. Berbasis di Palembang.",
       cta_projects: "Lihat Proyek ↓",
       cta_cv: "Unduh CV"
     },
     about: {
-      name_desc: "fullstack developer & problem solver",
+      name_desc: "frontend developer & problem solver",
       synopsis: "julio [--build] [--lead] [--learn]",
       description: "Mahasiswa Teknik Informatika di Universitas Sriwijaya (IPK: 3.95/4.00) yang membangun hal-hal yang bekerja. Dari platform pemerintah hingga sistem CBT, dari mengajar komunitas tuli hingga memenangkan hackathon.",
       personality: "Tidak percaya skill percentage bars. Percaya pada shipping.",
