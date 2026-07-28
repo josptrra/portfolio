@@ -48,7 +48,10 @@ export default function AdminDashboard() {
     images: '',
     problem: '',
     contributions: '',
-    links: '',
+    githubEnabled: false,
+    githubUrl: '',
+    liveDemoEnabled: false,
+    liveDemoUrl: '',
   });
 
   // Verify Supabase auth session
@@ -110,7 +113,10 @@ export default function AdminDashboard() {
       images: '',
       problem: '',
       contributions: '',
-      links: '',
+      githubEnabled: false,
+      githubUrl: '',
+      liveDemoEnabled: false,
+      liveDemoUrl: '',
     });
     setIsFormOpen(true);
   };
@@ -118,6 +124,10 @@ export default function AdminDashboard() {
   const handleOpenEditForm = (proj: Project) => {
     setEditingSlug(proj.slug);
     setUploadStatus('');
+
+    const ghLink = proj.detail.links?.find((l) => l.label.toLowerCase().includes('github'));
+    const demoLink = proj.detail.links?.find((l) => l.label.toLowerCase().includes('demo') || l.label.toLowerCase().includes('live'));
+
     setFormData({
       slug: proj.slug,
       folderName: proj.folderName,
@@ -130,7 +140,10 @@ export default function AdminDashboard() {
       images: proj.images?.join('\n') || '',
       problem: proj.detail.problem || '',
       contributions: proj.detail.contributions?.join('\n') || '',
-      links: proj.detail.links?.map((l) => `${l.label}|${l.url}`).join('\n') || '',
+      githubEnabled: !!ghLink,
+      githubUrl: ghLink?.url || '',
+      liveDemoEnabled: !!demoLink,
+      liveDemoUrl: demoLink?.url || '',
     });
     setIsFormOpen(true);
   };
@@ -183,13 +196,14 @@ export default function AdminDashboard() {
     const techArray = formData.tech.split(',').map((t) => t.trim()).filter(Boolean);
     const imagesArray = formData.images.split('\n').map((i) => i.trim()).filter(Boolean);
     const contribsArray = formData.contributions.split('\n').map((c) => c.trim()).filter(Boolean);
-    const linksArray = formData.links
-      .split('\n')
-      .map((l) => {
-        const [label, url] = l.split('|');
-        return label && url ? { label: label.trim(), url: url.trim() } : null;
-      })
-      .filter(Boolean) as { label: string; url: string }[];
+
+    const linksArray: { label: string; url: string }[] = [];
+    if (formData.githubEnabled && formData.githubUrl.trim()) {
+      linksArray.push({ label: 'GitHub', url: formData.githubUrl.trim() });
+    }
+    if (formData.liveDemoEnabled && formData.liveDemoUrl.trim()) {
+      linksArray.push({ label: 'Live Demo', url: formData.liveDemoUrl.trim() });
+    }
 
     const payload: Partial<Project> = {
       slug: formData.slug.trim(),
@@ -566,6 +580,59 @@ export default function AdminDashboard() {
                   className="w-full bg-background border border-border/80 text-text p-2.5 rounded-xl font-mono outline-none focus:border-accent"
                   placeholder="Built frontend UI&#10;Integrated REST API"
                 />
+              </div>
+
+              {/* TOGGLE LINKS & ACTION BUTTONS CARDS */}
+              <div className="bg-background/60 border border-border/80 p-4 rounded-xl space-y-4">
+                <label className="text-accent font-bold block text-xs uppercase tracking-wider">
+                  🔗 ACTION BUTTONS & EXTERNAL LINKS:
+                </label>
+
+                {/* GitHub Toggle Card */}
+                <div className="space-y-2 border-b border-border/40 pb-3">
+                  <label className="flex items-center gap-2.5 cursor-pointer text-xs font-mono text-text">
+                    <input
+                      type="checkbox"
+                      checked={formData.githubEnabled}
+                      onChange={(e) => setFormData({ ...formData, githubEnabled: e.target.checked })}
+                      className="w-4 h-4 accent-accent rounded cursor-pointer"
+                    />
+                    <span className="font-bold text-text">Enable "GitHub" Button</span>
+                  </label>
+
+                  {formData.githubEnabled && (
+                    <input
+                      type="url"
+                      value={formData.githubUrl}
+                      onChange={(e) => setFormData({ ...formData, githubUrl: e.target.value })}
+                      className="w-full bg-background border border-border/80 text-text p-2.5 rounded-xl font-mono text-xs outline-none focus:border-accent"
+                      placeholder="https://github.com/josptrra/repository-name"
+                    />
+                  )}
+                </div>
+
+                {/* Live Demo Toggle Card */}
+                <div className="space-y-2">
+                  <label className="flex items-center gap-2.5 cursor-pointer text-xs font-mono text-text">
+                    <input
+                      type="checkbox"
+                      checked={formData.liveDemoEnabled}
+                      onChange={(e) => setFormData({ ...formData, liveDemoEnabled: e.target.checked })}
+                      className="w-4 h-4 accent-accent rounded cursor-pointer"
+                    />
+                    <span className="font-bold text-text">Enable "Live Demo" Button</span>
+                  </label>
+
+                  {formData.liveDemoEnabled && (
+                    <input
+                      type="url"
+                      value={formData.liveDemoUrl}
+                      onChange={(e) => setFormData({ ...formData, liveDemoUrl: e.target.value })}
+                      className="w-full bg-background border border-border/80 text-text p-2.5 rounded-xl font-mono text-xs outline-none focus:border-accent"
+                      placeholder="https://manggala-cbt.com"
+                    />
+                  )}
+                </div>
               </div>
 
               <div className="flex justify-end gap-3 pt-4 border-t border-border/60">

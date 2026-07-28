@@ -1,21 +1,21 @@
 import { useState, useEffect } from 'react';
 import { ProjectCard } from '../ui/ProjectCard';
 import { getProjects } from '../../services/projectService';
-import { type Project, projects as fallbackProjects } from '../../data/projects';
+import { type Project } from '../../data/projects';
 
 export function Projects() {
-  const [projectList, setProjectList] = useState<Project[]>(fallbackProjects);
+  const [projectList, setProjectList] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getProjects().then((data) => {
-      if (data && data.length > 0) {
-        setProjectList(data);
-      }
+      setProjectList(data || []);
+      setLoading(false);
     });
   }, []);
 
   return (
-    <section id="projects" className="min-h-screen py-24 px-4 md:px-8 max-w-6xl mx-auto flex flex-col justify-center">
+    <section id="projects" className="min-h-screen py-24 px-4 md:px-8 max-w-7xl mx-auto flex flex-col justify-center">
       {/* Top Section Command Bar */}
       <div className="mb-6 flex items-center justify-between font-mono text-xs text-muted border-b border-border/80 pb-3">
         <div className="flex items-center gap-2">
@@ -27,12 +27,22 @@ export function Projects() {
         <span className="hidden sm:block text-muted">// FEATURED_BUILDS ({projectList.length} DIRECTORIES)</span>
       </div>
 
-      {/* Projects 2-Column Responsive Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fade-in">
-        {projectList.map((project) => (
-          <ProjectCard key={project.slug} project={project} />
-        ))}
-      </div>
+      {/* Projects Grid: 3-column when 3 items, 2-column otherwise */}
+      {loading ? (
+        <div className="font-mono text-xs text-muted py-12 text-center animate-pulse">
+          $ fetching_projects_from_supabase...
+        </div>
+      ) : (
+        <div
+          className={`grid grid-cols-1 ${
+            projectList.length === 3 ? 'lg:grid-cols-3 md:grid-cols-3' : 'md:grid-cols-2'
+          } gap-6 animate-fade-in`}
+        >
+          {projectList.map((project) => (
+            <ProjectCard key={project.slug} project={project} />
+          ))}
+        </div>
+      )}
     </section>
   );
 }
