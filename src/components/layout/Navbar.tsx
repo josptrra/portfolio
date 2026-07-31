@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const navItems = [
+  { id: 'projects', label: 'projects' },
   { id: 'about', label: 'about' },
   { id: 'experience', label: 'experience' },
-  { id: 'projects', label: 'projects' },
   { id: 'stack', label: 'stack' },
   { id: 'contact', label: 'contact' },
 ];

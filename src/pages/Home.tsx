@@ -39,15 +39,15 @@ export default function Home() {
       <Hero />
 
       <ScrollReveal>
+        <Projects />
+      </ScrollReveal>
+
+      <ScrollReveal>
         <About />
       </ScrollReveal>
 
       <ScrollReveal>
         <Experience />
-      </ScrollReveal>
-
-      <ScrollReveal>
-        <Projects />
       </ScrollReveal>
 
       <ScrollReveal>
